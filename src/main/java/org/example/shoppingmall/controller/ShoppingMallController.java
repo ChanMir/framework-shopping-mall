@@ -1,5 +1,7 @@
 package org.example.shoppingmall.controller;
 
+import org.example.shoppingmall.Service.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +26,19 @@ public class ShoppingMallController {
         return "product";
     }
 
-    // 레파지토리
     // 서비스
+    @Autowired
+    private MemberService memberService;
+    @Autowired
+    private ProductService productService;
+    @Autowired
+    private CategoryService categoryService;
+    @Autowired
+    private CartService cartService;
+    @Autowired
+    private OrderService orderService;
+    @Autowired
+    private OrderItemService orderItemService;
+
     // 컨트롤러
 }
