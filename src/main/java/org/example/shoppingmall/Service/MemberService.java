@@ -3,6 +3,7 @@ package org.example.shoppingmall.Service;
 import org.example.shoppingmall.domain.Member;
 import org.example.shoppingmall.domain.MemberRegisterRequest;
 import org.example.shoppingmall.domain.MemberUpdateRequest;
+import org.example.shoppingmall.domain.Role;
 import org.example.shoppingmall.repository.MemberRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,9 +28,10 @@ public class MemberService{
         member.setPassword(request.getPassword());
         member.setEmail(request.getEmail());
         member.setPhone(request.getPhone());
-        member.setRole("MEMBER");
+        member.setRole(Role.USER);
         return memberRepository.save(member);
     }
+
 
     @Transactional(readOnly = true)
     public Optional<Member> login(String username, String password) {
