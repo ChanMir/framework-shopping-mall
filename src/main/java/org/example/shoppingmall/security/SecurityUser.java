@@ -14,9 +14,12 @@ public class SecurityUser implements UserDetails {
 
     private final Member member;
 
+    public Member getMember() {
+        return member;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        // 권한 부여
         return List.of(new SimpleGrantedAuthority("ROLE_" + member.getRole().name()));
     }
 
