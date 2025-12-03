@@ -45,5 +45,8 @@ public class Order {
 
     @OneToOne(mappedBy = "order", fetch = FetchType.LAZY)
     private Delivery delivery;
+    public boolean isCancelable() {
+        return this.status == OrderStatus.PENDING || this.status == OrderStatus.CONFIRMED;
+    }
 
 }

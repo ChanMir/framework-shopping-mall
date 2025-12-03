@@ -15,6 +15,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequiredArgsConstructor
@@ -68,6 +69,21 @@ public class OrderController {
     ) {
         // 주소값을 결제 페이지로 넘김
         return "redirect:/payment/select?address=" + address;
+    }
+
+    @PostMapping("{id}/cancel")
+    public String cancelOrder(@PathVariable Long id,
+                              @AuthenticationPrincipal SecurityUser user,
+                              RedirectAttributes redirectAttributes) {
+
+        try {
+            orderService.cancelOrder(id);
+            redirectAttributes.addFlashAttribute("success", "주문이 취소되었습니다.");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+        }
+
+        return "redirect:/order/" + id;
     }
 
 

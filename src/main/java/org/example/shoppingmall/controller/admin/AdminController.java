@@ -1,4 +1,4 @@
-package org.example.shoppingmall.controller;
+package org.example.shoppingmall.controller.admin;
 
 import lombok.RequiredArgsConstructor;
 import org.example.shoppingmall.repository.MemberRepository;
@@ -18,7 +18,7 @@ public class AdminController {
     private final ProductRepository productRepository;
     private final OrderRepository orderRepository;
 
-    @GetMapping("/dashboard")
+    @GetMapping("/")
     public String dashboard(Model model) {
 
         long memberCount = memberRepository.count();

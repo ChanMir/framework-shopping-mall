@@ -42,4 +42,7 @@ public class Member {
     protected void onCreate() {
         createdAt = LocalDateTime.now();
     }
+    @Column(nullable = false)
+    private boolean active = true;
+
 }

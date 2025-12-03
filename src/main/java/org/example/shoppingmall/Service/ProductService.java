@@ -25,4 +25,12 @@ public class ProductService {
         return productRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("상품을 찾을 수 없습니다."));
     }
+    public void save(Product product) {
+        productRepository.save(product);
+    }
+
+    public void delete(Long id) {
+        productRepository.deleteById(id);
+    }
+
 }

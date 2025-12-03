@@ -146,11 +146,21 @@
                 </tbody>
             </table>
 
+
             <div class="mt-4">
                 <a th:href="@{/order}" class="btn btn-secondary">
                     ← 주문 목록으로 돌아가기
                 </a>
             </div>
+
+            <div th:if="${order.status.toString() == 'PENDING'
+         or order.status.toString() == 'CONFIRMED'}">
+                <form th:action="@{'/order/' + ${order.id} + '/cancel'}" method="post"
+                      onsubmit="return confirm('정말 주문을 취소하시겠습니까?');">
+                    <button class="btn btn-danger mt-3">주문 취소</button>
+                </form>
+            </div>
+
 
         </div>
     </div>

@@ -39,4 +39,9 @@ public class Delivery {
             this.state = DeliveryState.PREPARING;
         }
     }
+
+    public boolean isDeliveryStarted() {
+        return this.state == DeliveryState.SHIPPING || this.state == DeliveryState.DELIVERED;
+    }
+
 }

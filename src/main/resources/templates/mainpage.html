@@ -34,8 +34,9 @@
             <div class="card product-card h-100">
 
                 <!-- 이미지 URL 수정 -->
-                <img th:src="@{|/img/${product.imageUrl}|}"
-                     class="card-img-top" alt="상품 이미지">
+                <img th:src="@{|/img/${product.imageUrl}|}" class="card-img-top">
+
+                class="card-img-top" alt="상품 이미지">
 
                 <div class="card-body text-center">
                     <h5 class="card-title" th:text="${product.name}">상품명</h5>

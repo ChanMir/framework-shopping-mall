@@ -37,4 +37,21 @@ public class DeliveryService {
     public Delivery findByOrderId(Long orderId) {
         return deliveryRepository.findByOrderId(orderId);
     }
+    // 배송 상태/송장번호 수정
+    public void updateDelivery(Long orderId, DeliveryState state, String trackingNo) {
+        Delivery delivery = deliveryRepository.findByOrderId(orderId);
+
+        if (delivery == null) {
+            throw new IllegalArgumentException("배송 정보를 찾을 수 없습니다.");
+        }
+
+        delivery.setState(state);
+
+        // trackingNo가 null이 아닐 때만 업데이트
+        if (trackingNo != null && !trackingNo.isBlank()) {
+            delivery.setTrackingNo(trackingNo);
+        }
+
+        deliveryRepository.save(delivery);
+    }
 }

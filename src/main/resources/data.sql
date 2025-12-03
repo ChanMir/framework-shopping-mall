@@ -1,11 +1,12 @@
-INSERT INTO members (username, password, email, phone, role, created_at)
+INSERT INTO members (username, password, email, phone, role, created_at,active)
 VALUES (
            'admin',
            '$2a$10$1l8nmvC2FlmUCjyKZhGPUukJuDvhIkW13xGhLPemowcHd24vD6EIK', -- 비밀번호: admin1234
            'admin@example.com',
            '01000000000',
            'ADMIN',
-           NOW()
+           NOW(),
+            TRUE
        );
 INSERT INTO products (name, price, description, image_url, stock, category_id)
 VALUES ('게이밍 마우스', 29000, 'RGB LED가 포함된 고성능 게이밍 마우스', 'mouse.jpg', 100, 1);

@@ -1,0 +1,59 @@
+<table class="table table-hover text-center align-middle">
+
+    <thead class="table-dark">
+    <tr>
+        <th>ID</th>
+        <th>Username</th>
+        <th>Email</th>
+        <th>상태</th>
+        <th>관리</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+    <tr th:each="m : ${members}">
+
+        <td th:text="${m.id}"></td>
+        <td th:text="${m.username}"></td>
+        <td th:text="${m.email}"></td>
+
+        <!-- 상태 표시 -->
+        <td>
+            <span th:if="${m.active}" class="badge bg-success">정상</span>
+            <span th:if="${!m.active}" class="badge bg-danger">정지됨</span>
+        </td>
+
+        <!-- 관리 버튼 -->
+        <td>
+
+            <!-- 정지/해제 토글 버튼 -->
+            <form th:action="@{'/admin/members/toggle/' + ${m.id}}" method="post" style="display:inline;">
+
+                <!-- 정지된 경우: 해제 버튼 파란색 -->
+                <button th:if="${!m.active}" class="btn btn-sm btn-primary">
+                    해제
+                </button>
+
+                <!-- 정상인 경우: 정지 버튼 노란색 -->
+                <button th:if="${m.active}" class="btn btn-sm btn-warning">
+                    정지
+                </button>
+
+            </form>
+
+            <!-- 삭제 버튼 -->
+            <form th:action="@{'/admin/members/delete/' + ${m.id}}" method="post"
+                  onsubmit="return confirm('정말 회원을 삭제하시겠습니까?');"
+                  style="display:inline;">
+                <button class="btn btn-sm btn-danger">
+                    삭제
+                </button>
+            </form>
+
+        </td>
+
+    </tr>
+
+    </tbody>
+</table>

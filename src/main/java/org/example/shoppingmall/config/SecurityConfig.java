@@ -31,7 +31,7 @@ public class SecurityConfig {
                         .requestMatchers("/h2-console/**").permitAll()
 
                         .requestMatchers("/", "/login", "/member/login", "/member/register",
-                                "/css/**", "/js/**", "/images/**").permitAll()
+                                "/css/**", "/js/**", "/img/**").permitAll()
 
                         // 일반 사용자 권한
                         .requestMatchers("/member/**", "/cart/**", "/order/**")

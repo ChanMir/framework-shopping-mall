@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/header :: head"></head>
+
+<body>
+
+<th:block th:replace="admin/admin-header :: adminHeader"></th:block>
+
+<div class="container mt-5">
+
+    <h2 class="mb-4">상품 등록</h2>
+
+    <form th:action="@{/admin/products/add}" method="post"
+          enctype="multipart/form-data">
+
+        <div class="mb-3">
+            <label class="form-label">상품명</label>
+            <input type="text" name="name" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">가격</label>
+            <input type="number" name="price" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">재고</label>
+            <input type="number" name="stock" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">설명</label>
+            <textarea name="description" class="form-control" rows="4" required></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">상품 이미지</label>
+            <input type="file" name="imageFile" class="form-control" accept="image/*" required>
+        </div>
+
+        <button class="btn btn-primary">상품 등록</button>
+    </form>
+
+    <a href="/admin/products" class="btn btn-secondary">취소</a>
+
+    </form>
+
+</div>
+
+</body>
+</html>

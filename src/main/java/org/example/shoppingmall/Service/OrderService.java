@@ -1,10 +1,9 @@
 package org.example.shoppingmall.Service;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.example.shoppingmall.domain.*;
-import org.example.shoppingmall.repository.CartRepository;
-import org.example.shoppingmall.repository.OrderItemRepository;
-import org.example.shoppingmall.repository.OrderRepository;
+import org.example.shoppingmall.repository.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,6 +16,12 @@ public class OrderService {
     private final OrderItemRepository orderItemRepository;
     private final CartRepository cartRepository;
     private final DeliveryService deliveryService;
+    private final PaymentRepository paymentRepository;
+    private final DeliveryRepository deliveryRepository;
+    public List<Order> findAll() {
+        return orderRepository.findAll();
+    }
+
 
     public Order createOrder(Member member, String address) {
 
@@ -72,4 +77,48 @@ public class OrderService {
     public List<Order> findByMember(Member member) {
         return orderRepository.findByMember(member);
     }
+
+    @Transactional
+    public void cancelOrder(Long orderId) {
+
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new IllegalArgumentException("주문을 찾을 수 없습니다."));
+
+        Delivery delivery = deliveryRepository.findByOrder(order);
+        Payment payment = paymentRepository.findByOrder(order);
+
+        // 1) 배송이 시작된 경우 취소 불가
+        if (delivery != null && delivery.isDeliveryStarted()) {
+            throw new IllegalStateException("배송이 시작된 주문은 취소할 수 없습니다.");
+        }
+
+        // 2) 주문 상태 변경
+        if (!order.isCancelable()) {
+            throw new IllegalStateException("현재 상태에서는 주문 취소가 불가능합니다.");
+        }
+        order.setStatus(OrderStatus.CANCELLED);
+
+        // 3) 배송 상태 변경
+        if (delivery != null) {
+            delivery.setState(DeliveryState.CANCELED);
+        }
+
+        // 4) 결제 취소 처리
+        if (payment != null && payment.getStatus() == PaymentStatus.SUCCESS) {
+            payment.setStatus(PaymentStatus.REFUNDED);
+        }
+
+        orderRepository.save(order);
+    }
+    // 주문 상태 변경
+    @Transactional
+    public void updateStatus(Long orderId, OrderStatus status) {
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new IllegalArgumentException("주문을 찾을 수 없습니다."));
+
+        order.setStatus(status);
+        orderRepository.save(order);
+    }
+
+
 }
