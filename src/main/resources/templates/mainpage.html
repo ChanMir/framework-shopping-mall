@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:replace="fragments/header :: header"></th:block>
 <head>
     <meta charset="UTF-8">
     <title>메인 페이지</title>
@@ -20,53 +22,6 @@
 
 <body>
 
-<!-- ✔ 네비게이션바 -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="/">MY SHOP</a>
-
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarNav">
-
-            <ul class="navbar-nav me-auto">
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/product}">상품 목록</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/cart}">장바구니</a>
-                </li>
-            </ul>
-
-            <ul class="navbar-nav">
-
-                <!-- 🔵 로그인 상태일 때만 출력 -->
-                <li class="nav-item" th:if="${#authorization.expr('isAuthenticated()')}">
-                    <span class="navbar-text text-white me-3">
-                        <b th:text="${#authentication.principal.username}"></b> 님 환영합니다!
-                    </span>
-                </li>
-
-                <!-- 로그아웃 -->
-                <li class="nav-item" th:if="${#authorization.expr('isAuthenticated()')}">
-                    <a class="nav-link" th:href="@{/logout}">로그아웃</a>
-                </li>
-
-                <!-- 🟡 로그인하지 않았을 때만 출력 -->
-                <li class="nav-item" th:if="${#authorization.expr('isAnonymous()')}">
-                    <a class="nav-link" th:href="@{/member/login}">로그인</a>
-                </li>
-                <li class="nav-item" th:if="${#authorization.expr('isAnonymous()')}">
-                    <a class="nav-link" th:href="@{/member/register}">회원가입</a>
-                </li>
-
-            </ul>
-        </div>
-    </div>
-</nav>
 
 <div class="container mt-4 mb-5">
 

@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -32,16 +34,16 @@ public class Order {
     @Column(nullable = false)
     private OrderStatus status;
 
+    // 🔥 주문 상세 연결 추가!
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    private List<OrderItem> items = new ArrayList<>();
+
     @PrePersist
     protected void onCreate() {
         orderDate = LocalDateTime.now();
     }
-}
 
-enum OrderStatus {
-    PENDING,    // 주문 대기
-    CONFIRMED,  // 주문 확인
-    PREPARING,  // 상품 준비중
-    COMPLETED,  // 주문 완료
-    CANCELLED   // 주문 취소
+    @OneToOne(mappedBy = "order", fetch = FetchType.LAZY)
+    private Delivery delivery;
+
 }

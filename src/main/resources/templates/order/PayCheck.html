@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/header :: head"></head>
+
+<body>
+<th:block th:replace="fragments/header :: header"></th:block>
+
+<div class="container mt-5">
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+
+            <h3 class="mb-4">결제하기</h3>
+
+            <form th:action="@{/payment/complete}" method="post">
+
+                <!-- 주소 hidden -->
+                <input type="hidden" name="address" th:value="${address}"/>
+
+                <label class="form-label">결제 수단</label>
+                <select name="method" class="form-select mb-3">
+                    <option value="CREDIT_CARD">신용카드</option>
+                    <option value="BANK_TRANSFER">계좌이체</option>
+                    <option value="KAKAO_PAY">카카오페이</option>
+                    <option value="NAVER_PAY">네이버페이</option>
+                    <option value="PAYCO">페이코</option>
+                </select>
+
+                <button class="btn btn-primary w-100">결제하기</button>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

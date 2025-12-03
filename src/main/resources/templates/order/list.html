@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/header :: head"></head>
+
+<body>
+
+<!-- 공통 네비 -->
+<th:block th:replace="fragments/header :: header"></th:block>
+
+<div class="container mt-5 mb-5">
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+
+            <h2 class="mb-4 border-bottom pb-2">나의 주문 목록</h2>
+
+            <table class="table table-hover text-center align-middle">
+                <thead class="table-light">
+                <tr>
+                    <th>주문 번호</th>
+                    <th>주문 금액</th>
+                    <th>상태</th>
+                    <th>날짜</th>
+                    <th>상세보기</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr th:each="o : ${orders}">
+                    <td th:text="${o.id}"></td>
+
+                    <td class="fw-bold text-danger"
+                        th:text="|${o.totalPrice}원|"></td>
+
+                    <td>
+                        <span th:switch="${o.status.name()}">
+                            <span th:case="'PENDING'" class="badge bg-secondary">대기중</span>
+                            <span th:case="'CONFIRMED'" class="badge bg-info text-dark">확인됨</span>
+                            <span th:case="'PREPARING'" class="badge bg-warning text-dark">준비중</span>
+                            <span th:case="'COMPLETED'" class="badge bg-success">완료</span>
+                            <span th:case="'CANCELLED'" class="badge bg-danger">취소됨</span>
+                            <span th:case="*" class="badge bg-light text-dark">알수없음</span>
+                        </span>
+                    </td>
+
+
+                    <td th:text="${#temporals.format(o.orderDate, 'yyyy-MM-dd HH:mm')}"></td>
+
+                    <td>
+                        <a th:href="@{'/order/' + ${o.id}}" class="btn btn-primary btn-sm">
+                            상세보기
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+</div>
+
+<!-- 공통 푸터 -->
+<th:block th:replace="fragments/footer :: footer"></th:block>
+
+</body>
+</html>

@@ -1,6 +1,6 @@
 package org.example.shoppingmall.domain;
 
-import jakarta.persistence .*;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,6 +10,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class Delivery {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -18,20 +19,24 @@ public class Delivery {
     @JoinColumn(name = "order_id")
     private Order order;
 
-    @Column(name = "tracking_no")
-    private String trackingNo;
-
     @Column(nullable = false)
     private String address;
+
+    @Column(name = "tracking_no")
+    private String trackingNo;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private DeliveryState state;
-}
 
-enum DeliveryState {
-    PREPARING,
-    SHIPPING,
-    DELIVERED,
-    CANCELED
+    @PrePersist
+    protected void onCreate() {
+        // 주문 생성 시 자동 초기화
+        if (this.trackingNo == null) {
+            this.trackingNo = null;  // 또는 "" 가능
+        }
+        if (this.state == null) {
+            this.state = DeliveryState.PREPARING;
+        }
+    }
 }

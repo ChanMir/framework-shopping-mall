@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/header :: head"></head>
+
+<body>
+
+<!-- 네비게이션 -->
+<th:block th:replace="fragments/header :: header"></th:block>
+
+<div class="container mt-5 mb-5">
+
+  <div class="card shadow-sm">
+    <div class="card-body">
+
+      <h3 class="mb-4">주문 정보 입력</h3>
+
+      <!-- 주소 입력 폼 -->
+      <form th:action="@{/order/checkout}" method="post">
+
+        <div class="mb-3">
+          <label class="form-label">배송지 주소</label>
+          <input type="text" name="address" class="form-control"
+                 placeholder="배송 받을 주소를 입력하세요" required>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">요청사항 (선택)</label>
+          <textarea name="request" class="form-control" rows="3"
+                    placeholder="요청사항을 입력하세요 (선택)"></textarea>
+        </div>
+        <button class="btn btn-primary w-100">주문 완료</button>
+      </form>
+
+      <a th:href="@{/cart}" class="btn btn-secondary w-100 mt-3">장바구니로 돌아가기</a>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

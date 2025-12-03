@@ -21,11 +21,13 @@ public class Payment {
     @JoinColumn(name = "order_id", nullable = false)
     private Order order;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private String method;
+    private PaymentMethod method;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private String status;
+    private PaymentStatus status;
 
     @Column(name = "paid_at")
     @Temporal(TemporalType.TIMESTAMP)

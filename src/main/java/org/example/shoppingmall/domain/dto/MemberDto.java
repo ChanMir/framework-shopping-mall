@@ -1,4 +1,4 @@
-package org.example.shoppingmall.dto;
+package org.example.shoppingmall.domain.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

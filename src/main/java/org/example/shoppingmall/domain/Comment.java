@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
+@Table(name = "comments")
 public class Comment {
 
     @Id
@@ -29,11 +30,10 @@ public class Comment {
     private String content;
 
     @Column(name = "created_at")
-    @Temporal(TemporalType.TIMESTAMP)
-    private LocalDateTime CommentTime;
+    private LocalDateTime createdAt;
 
     @PrePersist
     protected void onCreate() {
-        CommentTime = LocalDateTime.now();
+        createdAt = LocalDateTime.now();
     }
 }
