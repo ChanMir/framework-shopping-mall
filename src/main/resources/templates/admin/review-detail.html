@@ -1,87 +1,112 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>리뷰 상세 관리</title>
-</head>
+
+<head th:replace="admin/admin-header :: adminHead"></head>
+
 <body>
 
-<h1>리뷰 상세</h1>
+<!-- 관리자 헤더 -->
+<th:block th:replace="admin/admin-header :: adminHeader"></th:block>
 
-<p><b>ID:</b> <span th:text="${review.id}"></span></p>
-<p><b>상품 ID:</b> <span th:text="${review.product.id}"></span></p>
-<p><b>작성자:</b> <span th:text="${review.member.username}"></span></p>
-<p><b>평점:</b> <span th:text="${review.rating}"></span></p>
-<p><b>내용:</b> <span th:text="${review.content}"></span></p>
-<p><b>상태:</b> <span th:text="${review.active ? '활성' : '비활성'}"></span></p>
+<div class="container mt-4">
 
-<!-- 리뷰 삭제 -->
-<form th:action="@{'/admin/reviews/' + ${review.id} + '/delete'}" method="post">
-    <button type="submit">리뷰 삭제</button>
-</form>
+    <h2>리뷰 상세 관리</h2>
+    <hr>
 
-<!-- 리뷰 활성/비활성 -->
-<form th:if="${review.active}"
-      th:action="@{'/admin/reviews/' + ${review.id} + '/disable'}"
-      method="post">
-    <button type="submit">리뷰 비활성</button>
-</form>
+    <p><b>ID:</b> <span th:text="${review.id}"></span></p>
+    <p><b>상품 ID:</b> <span th:text="${review.product.id}"></span></p>
+    <p><b>작성자:</b> <span th:text="${review.member.username}"></span></p>
+    <p><b>평점:</b> <span th:text="${review.rating}"></span></p>
+    <p><b>내용:</b>
+        <span style="white-space:pre-line;" th:text="${review.content}"></span>
+    </p>
 
-<form th:unless="${review.active}"
-      th:action="@{'/admin/reviews/' + ${review.id} + '/enable'}"
-      method="post">
-    <button type="submit">리뷰 활성</button>
-</form>
+    <p><b>상태:</b>
+        <span th:if="${review.active}" class="badge bg-success">활성</span>
+        <span th:if="${!review.active}" class="badge bg-secondary">비활성</span>
+    </p>
 
-<hr>
+    <!-- 리뷰 삭제/비활성/활성 -->
+    <div class="mb-3">
+        <!-- 리뷰 삭제 (댓글이 없을 때만 가능) -->
+        <form th:if="${#lists.isEmpty(comments)}"
+              th:action="@{'/admin/reviews/' + ${review.id} + '/delete'}"
+              method="post" style="display:inline;">
+            <button class="btn btn-danger btn-sm">리뷰 삭제</button>
+        </form>
 
-<h2>댓글 목록</h2>
+        <!-- 댓글이 있으면 비활성화된 버튼 표시 -->
+        <button th:unless="${#lists.isEmpty(comments)}"
+                class="btn btn-danger btn-sm" disabled
+                title="댓글이 존재하여 삭제할 수 없습니다.">
+            리뷰 삭제 불가
+        </button>
 
-<table border="1">
-    <tr>
-        <th>ID</th>
-        <th>작성자</th>
-        <th>내용</th>
-        <th>상태</th>
-        <th>관리</th>
-    </tr>
+        <form th:if="${review.active}"
+              th:action="@{'/admin/reviews/' + ${review.id} + '/disable'}"
+              method="post" style="display:inline;">
+            <button class="btn btn-warning btn-sm">리뷰 비활성</button>
+        </form>
 
-    <tr th:each="c : ${comments}">
-        <td th:text="${c.id}"></td>
+        <form th:unless="${review.active}"
+              th:action="@{'/admin/reviews/' + ${review.id} + '/enable'}"
+              method="post" style="display:inline;">
+            <button class="btn btn-success btn-sm">리뷰 활성</button>
+        </form>
+    </div>
 
-        <!-- 🔥 댓글 작성자 -->
-        <td th:text="${c.member.username}"></td>
+    <hr>
 
-        <td th:text="${c.content}"></td>
-        <td th:text="${c.active ? '활성' : '비활성'}"></td>
+    <h4>댓글 목록</h4>
 
-        <td>
-            <!-- 댓글 삭제 -->
-            <form th:action="@{'/admin/reviews/' + ${review.id} + '/comments/' + ${c.id} + '/delete'}"
-                  method="post"
-                  style="display:inline;">
-                <button type="submit">삭제</button>
-            </form>
+    <table class="table table-bordered text-center">
+        <thead class="table-light">
+        <tr>
+            <th>ID</th>
+            <th>작성자</th>
+            <th>내용</th>
+            <th>상태</th>
+            <th>관리</th>
+        </tr>
+        </thead>
 
-            <!-- 비활성화 -->
-            <form th:if="${c.active}"
-                  th:action="@{'/admin/reviews/' + ${review.id} + '/comments/' + ${c.id} + '/disable'}"
-                  method="post"
-                  style="display:inline;">
-                <button type="submit">비활성</button>
-            </form>
+        <tbody>
+        <tr th:each="c : ${comments}">
+            <td th:text="${c.id}"></td>
+            <td th:text="${c.member.username}"></td>
+            <td th:text="${c.content}"></td>
 
-            <!-- 활성화 -->
-            <form th:unless="${c.active}"
-                  th:action="@{'/admin/reviews/' + ${review.id} + '/comments/' + ${c.id} + '/enable'}"
-                  method="post"
-                  style="display:inline;">
-                <button type="submit">활성</button>
-            </form>
+            <td>
+                <span th:if="${c.active}" class="badge bg-success">활성</span>
+                <span th:if="${!c.active}" class="badge bg-secondary">비활성</span>
+            </td>
 
-        </td>
-    </tr>
+            <td>
+                <!-- 삭제 -->
+                <form th:action="@{'/admin/reviews/' + ${review.id} + '/comments/' + ${c.id} + '/delete'}"
+                      method="post" style="display:inline;">
+                    <button class="btn btn-danger btn-sm">삭제</button>
+                </form>
 
-</table>
+                <!-- 비활성 -->
+                <form th:if="${c.active}"
+                      th:action="@{'/admin/reviews/' + ${review.id} + '/comments/' + ${c.id} + '/disable'}"
+                      method="post" style="display:inline;">
+                    <button class="btn btn-warning btn-sm">비활성</button>
+                </form>
+
+                <!-- 활성 -->
+                <form th:unless="${c.active}"
+                      th:action="@{'/admin/reviews/' + ${review.id} + '/comments/' + ${c.id} + '/enable'}"
+                      method="post" style="display:inline;">
+                    <button class="btn btn-success btn-sm">활성</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
 
 </body>
 </html>

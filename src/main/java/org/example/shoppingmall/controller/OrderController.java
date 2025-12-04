@@ -18,6 +18,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/order")
@@ -76,8 +79,8 @@ public class OrderController {
             @RequestParam String address,
             @AuthenticationPrincipal SecurityUser user
     ) {
-        // 주소값을 결제 페이지로 넘김
-        return "redirect:/payment/select?address=" + address;
+        String encoded = URLEncoder.encode(address, StandardCharsets.UTF_8);
+        return "redirect:/payment/select?address=" + encoded;
     }
 
     @PostMapping("{id}/cancel")

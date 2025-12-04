@@ -36,7 +36,11 @@ public class AdminMemberController {
 
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable Long id) {
-        memberRepository.deleteById(id);
+        try {
+            memberRepository.deleteById(id);
+        } catch (Exception e) {
+
+        }
         return "redirect:/admin/members";
     }
 }

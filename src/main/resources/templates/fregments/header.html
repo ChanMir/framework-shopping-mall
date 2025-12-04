@@ -79,11 +79,45 @@
                         <a class="nav-link" th:href="@{/member/register}">회원가입</a>
                     </li>
 
+                    <!-- 🔥 이용약관 버튼 -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#termsModal">
+                            이용약관
+                        </a>
+                    </li>
+
                 </ul>
 
             </div>
         </div>
     </nav>
+
+    <!-- 🔥 이용약관 Modal -->
+    <div class="modal fade" id="termsModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title">이용약관</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body small">
+                    <p>
+                        본 서비스는 회원에게 기본적인 쇼핑몰 기능을 제공합니다.<br>
+                        개인정보는 서비스 제공을 위해 최소한으로 사용되며,<br>
+                        외부로 절대 유출되지 않습니다.
+                    </p>
+                    <p>자세한 약관은 고객센터를 통해 확인할 수 있습니다.</p>
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn btn-secondary btn-sm" data-bs-dismiss="modal">닫기</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
 
 </th:block>
 

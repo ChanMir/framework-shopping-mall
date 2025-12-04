@@ -23,7 +23,7 @@
             <p class="mt-1 mb-4">
                 <strong>상태:</strong>
                 <span th:switch="${inquiry.status.toString().toUpperCase()}">
-                    <span th:case="'WAITING'" class="badge bg-warning text-dark">답변대기</span>
+                    <span th:case="'PENDING'" class="badge bg-warning text-dark">답변대기</span>
                     <span th:case="'ANSWERED'" class="badge bg-success">답변완료</span>
                     <span th:case="'CLOSED'" class="badge bg-secondary">종료</span>
                     <span th:case="*" class="badge bg-light text-dark">알수없음</span>
@@ -72,8 +72,13 @@
                     <form th:action="@{'/inquiry/reply/delete/' + ${reply.id}}"
                           method="post" style="display:inline;"
                           onsubmit="return confirm('정말 삭제하시겠습니까?');">
+
+                        <!-- inquiryId 추가 -->
+                        <input type="hidden" name="inquiryId" th:value="${inquiry.id}">
+
                         <button class="btn btn-sm btn-outline-danger">삭제</button>
                     </form>
+
 
                 </div>
 
@@ -82,13 +87,19 @@
                      class="mt-2 d-none">
 
                     <form th:action="@{/inquiry/reply/update}" method="post">
+
+                        <!-- replyId는 이미 있음 -->
                         <input type="hidden" name="replyId" th:value="${reply.id}">
+
+                        <!-- inquiryId 추가 -->
+                        <input type="hidden" name="inquiryId" th:value="${inquiry.id}">
 
                         <textarea name="content" class="form-control mb-2"
                                   rows="3" th:text="${reply.content}"></textarea>
 
                         <button class="btn btn-primary btn-sm">수정 완료</button>
                     </form>
+
                 </div>
 
             </div>

@@ -22,6 +22,7 @@ public class InquiryService {
         i.setMember(member);
         i.setTitle(title);
         i.setContent(content);
+        i.setStatus(InquiryStatus.PENDING);
         return inquiryRepository.save(i);
     }
 

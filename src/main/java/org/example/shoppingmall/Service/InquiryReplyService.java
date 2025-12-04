@@ -34,8 +34,6 @@ public class InquiryReplyService {
 
         inquiryReplyRepository.save(reply);
 
-        // 답변 등록 시 문의 상태 변경 가능
-        inquiry.setStatus(InquiryStatus.ANSWERED);
         inquiryRepository.save(inquiry);
     }
 
