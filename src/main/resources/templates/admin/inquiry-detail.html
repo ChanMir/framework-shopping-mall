@@ -47,7 +47,7 @@
          th:each="r : ${replies}">
         <p th:text="${r.content}"></p>
         <small th:text="${#temporals.format(r.createdAt, 'yyyy-MM-dd HH:mm')}"></small>
-        <span class="text-muted ms-2">(관리자: <span th:text="${r.admin.username}"></span>)</span>
+        <span class="text-muted ms-2">(관리자: <span th:text="${r.member.username}"></span>)</span>
     </div>
 
     <!-- 답변 작성 -->

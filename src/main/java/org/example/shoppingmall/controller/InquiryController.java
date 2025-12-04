@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/inquiry")
-public class InquiryController {
+public class    InquiryController {
 
     private final InquiryService inquiryService;
-    private final InquiryReplyService replyService;
+    private final InquiryReplyService inquiryReplyService;
 
     /** ✔ 나의 문의 목록 */
     @GetMapping("")
@@ -72,7 +72,7 @@ public class InquiryController {
         Inquiry inquiry = inquiryService.getInquiry(id);
 
         model.addAttribute("inquiry", inquiry);
-        model.addAttribute("replies", replyService.getReplies(id));  // 답글 있다면 출력용
+        model.addAttribute("replies", inquiryReplyService.getReplies(id));  // 답글 있다면 출력용
 
         return "inquiry/detail";
     }
