@@ -8,6 +8,7 @@ import org.example.shoppingmall.domain.Delivery;
 import org.example.shoppingmall.domain.Member;
 import org.example.shoppingmall.domain.Order;
 import org.example.shoppingmall.domain.Payment;
+import org.example.shoppingmall.security.CustomUserDetails;
 import org.example.shoppingmall.security.SecurityUser;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -28,7 +29,15 @@ public class OrderController {
 
     private Member getLoginMember() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        return ((SecurityUser) auth.getPrincipal()).getMember();
+
+        if (auth == null || !auth.isAuthenticated() || "anonymousUser".equals(auth.getPrincipal())) {
+            return null; // 필요하면 여기서 예외 던져도 됨
+        }
+
+        CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
+
+
+        return user.getMember();
     }
 
 

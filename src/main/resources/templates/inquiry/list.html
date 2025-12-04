@@ -1,25 +1,24 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="fragments/header :: head"></head>
-
+<head th:replace="fregments/header :: head"></head>
 <body>
 
-<!-- 공통 네비게이션 -->
-<th:block th:replace="fragments/header :: header"></th:block>
+<th:block th:replace="fregments/header :: header"></th:block>
 
 <div class="container mt-5 mb-5">
 
-    <div class="card shadow-sm">
+    <div class="card shadow-soft">
         <div class="card-body">
 
-            <h2 class="mb-4 border-bottom pb-2">문의 목록</h2>
+            <h2 class="page-title">문의 목록</h2>
 
-            <div th:if="${#lists.isEmpty(inquiries)}" class="alert alert-warning">
+            <div th:if="${#lists.isEmpty(inquiries)}"
+                 class="alert alert-warning shadow-sm">
                 등록된 문의가 없습니다.
             </div>
 
-            <table class="table table-hover text-center align-middle"
+            <table class="table table-hover text-center align-middle mt-4"
                    th:if="${!#lists.isEmpty(inquiries)}">
                 <thead class="table-light">
                 <tr>
@@ -35,9 +34,7 @@
                 <tbody>
                 <tr th:each="q : ${inquiries}">
                     <td th:text="${q.id}"></td>
-
                     <td th:text="${q.title}"></td>
-
                     <td th:text="${q.member.username}"></td>
 
                     <td>
@@ -49,27 +46,25 @@
                         </span>
                     </td>
 
-                    <td th:text="${#temporals.format(q.createdAt, 'yyyy-MM-dd HH:mm')}"></td>
+                    <td th:text="${#temporals.format(q.createdAt,'yyyy-MM-dd HH:mm')}"></td>
 
                     <td>
-                        <a th:href="@{'/inquiry/' + ${q.id}}" class="btn btn-primary btn-sm">
-                            보기
-                        </a>
+                        <a th:href="@{'/inquiry/' + ${q.id}}"
+                           class="btn btn-primary btn-sm">보기</a>
                     </td>
                 </tr>
                 </tbody>
             </table>
 
-            <div class="text-end mt-3">
-                <a th:href="@{/inquiry/new}" class="btn btn-success">
-                    새 문의 작성
-                </a>
+            <div class="text-end mt-4">
+                <a th:href="@{/inquiry/new}" class="btn btn-success">새 문의 작성</a>
             </div>
+
         </div>
     </div>
 
 </div>
 
-<th:block th:replace="fragments/footer :: footer"></th:block>
+<th:block th:replace="fregments/footer :: footer"></th:block>
 </body>
 </html>

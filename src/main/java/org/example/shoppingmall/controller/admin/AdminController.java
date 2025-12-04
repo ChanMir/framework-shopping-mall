@@ -18,7 +18,7 @@ public class AdminController {
     private final ProductRepository productRepository;
     private final OrderRepository orderRepository;
 
-    @GetMapping("/")
+    @GetMapping("")
     public String dashboard(Model model) {
 
         long memberCount = memberRepository.count();

@@ -1,18 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<!-- 🔥 head fragment: CSS, meta 포함 -->
 <th:block th:fragment="head">
     <meta charset="UTF-8">
     <title th:text="${title} ?: 'MY SHOP'"></title>
-
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </th:block>
 
 <body>
 
-<!-- 헤더 프래그먼트 -->
 <th:block th:fragment="header">
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -40,9 +36,17 @@
                         <a class="nav-link" th:href="@{/order}">주문 목록</a>
                     </li>
 
-                    <!-- ⭐ 고객센터 메뉴 추가 -->
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/inquiry}">고객센터</a>
+                    </li>
+
+                    <!-- 🔥 관리자 전용 메뉴 -->
+                    <li class="nav-item"
+                        th:if="${#authorization.expr('hasRole(''ADMIN'')')}">
+                        <a class="nav-link text-warning fw-bold"
+                           th:href="@{/admin}">
+                            관리자 대시보드
+                        </a>
                     </li>
 
                 </ul>
@@ -56,6 +60,12 @@
                         </span>
                     </li>
 
+                    <!-- 마이페이지 -->
+                    <li class="nav-item" th:if="${#authorization.expr('isAuthenticated()')}">
+                        <a class="nav-link" th:href="@{/member/mypage}">마이페이지</a>
+                    </li>
+
+                    <!-- 로그아웃 -->
                     <li class="nav-item" th:if="${#authorization.expr('isAuthenticated()')}">
                         <a class="nav-link" th:href="@{/logout}">로그아웃</a>
                     </li>

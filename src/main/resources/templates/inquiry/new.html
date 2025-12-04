@@ -1,19 +1,17 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="fragments/header :: head"></head>
-
+<head th:replace="fregments/header :: head"></head>
 <body>
 
-<!-- 공통 네비 -->
-<th:block th:replace="fragments/header :: header"></th:block>
+<th:block th:replace="fregments/header :: header"></th:block>
 
 <div class="container mt-5 mb-5">
 
-    <div class="card shadow-sm">
+    <div class="card shadow-soft">
         <div class="card-body">
 
-            <h2 class="mb-4 border-bottom pb-2">새 문의 작성</h2>
+            <h2 class="page-title">새 문의 작성</h2>
 
             <form th:action="@{/inquiry/new}" method="post">
 
@@ -30,7 +28,7 @@
                 </div>
 
                 <div class="text-end">
-                    <a th:href="@{/inquiry}" class="btn btn-secondary">뒤로가기</a>
+                    <a th:href="@{/inquiry}" class="btn btn-secondary me-2">뒤로가기</a>
                     <button class="btn btn-primary">등록하기</button>
                 </div>
 
@@ -41,6 +39,6 @@
 
 </div>
 
-<th:block th:replace="fragments/footer :: footer"></th:block>
+<th:block th:replace="fregments/footer :: footer"></th:block>
 </body>
 </html>

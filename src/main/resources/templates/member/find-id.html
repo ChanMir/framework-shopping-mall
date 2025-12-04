@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fregments/header :: head"></head>
+
+<body>
+
+<th:block th:replace="fregments/header :: header"></th:block>
+
+<div class="container mt-5 mb-5">
+    <div class="card shadow-soft">
+        <div class="card-body">
+
+            <h2 class="page-title">아이디 찾기</h2>
+
+            <form th:action="@{/member/find-id}" method="post">
+                <label class="form-label">전화번호</label>
+                <input type="text" name="phone" placeholder="010-0000-0000" class="form-control mb-3" required>
+                <button class="btn btn-primary w-100">아이디 찾기</button>
+            </form>
+
+            <div class="text-center mt-3">
+                <a th:href="@{/member/login}">로그인 화면으로</a>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<th:block th:replace="fregments/footer :: footer"></th:block>
+</body>
+</html>

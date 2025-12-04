@@ -35,6 +35,8 @@ public class Review {
     @Column(nullable = false, length = 1000)
     private String content;
 
+    private boolean active = true; // 관리자 활성/비활성
+
     // 작성 시간
     @Column(name = "created_at")
     private LocalDateTime createdAt;

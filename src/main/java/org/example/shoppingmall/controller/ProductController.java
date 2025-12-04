@@ -28,6 +28,7 @@ public class ProductController {
     @GetMapping
     public String productList(Model model) {
         model.addAttribute("products", productService.findAll());
+        model.addAttribute("categories", productService.findAllCategories());
         return "product/list";
     }
 
@@ -50,6 +51,17 @@ public class ProductController {
         model.addAttribute("commentMap", commentMap);
 
         return "product/detail";
+    }
+    // 🔥 카테고리별 상품 목록
+    @GetMapping("/category/{categoryId}")
+    public String listByCategory(
+            @PathVariable Long categoryId,
+            Model model
+    ) {
+        model.addAttribute("products", productService.findByCategory(categoryId));
+        model.addAttribute("categories", productService.findAllCategories());
+        model.addAttribute("selectedCategory", categoryId);
+        return "product/list";
     }
 
 }

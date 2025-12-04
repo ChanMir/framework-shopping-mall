@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fregments/header :: head"></head>
+
+<body>
+
+<th:block th:replace="fregments/header :: header"></th:block>
+
+<div class="container mt-5 mb-5">
+  <div class="card shadow-soft">
+    <div class="card-body">
+
+      <h2 class="page-title">아이디 찾기 결과</h2>
+
+      <p th:if="${username}">
+        회원님의 아이디는 <b th:text="${username}"></b> 입니다.
+      </p>
+
+      <p th:if="${message}" th:text="${message}"></p>
+
+      <div class="text-end">
+        <a th:href="@{/member/login}" class="btn btn-primary">로그인 하기</a>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<th:block th:replace="fregments/footer :: footer"></th:block>
+</body>
+</html>

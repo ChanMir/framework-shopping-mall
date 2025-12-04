@@ -1,0 +1,133 @@
+/* =============== 전체 공통 스타일 =============== */
+
+body {
+    background-color: #f7f9fc; /* 은은한 화이트+그레이톤 */
+    font-family: "Inter", "Pretendard", sans-serif;
+    color: #333;
+}
+
+/* 링크 기본 스타일 */
+a {
+    text-decoration: none;
+    color: #0d6efd;
+}
+a:hover {
+    text-decoration: underline;
+}
+
+/* 제목 스타일 통일 */
+.page-title {
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 25px;
+    color: #222;
+}
+
+/* 컨테이너 간격 */
+.container {
+    max-width: 1000px;
+}
+
+/* ====== 카드 공통 스타일 ====== */
+.card {
+    border: none;
+    border-radius: 14px;
+    padding: 20px;
+    box-shadow: 0px 4px 16px rgba(0,0,0,0.06);
+    background: #fff;
+}
+.card-body {
+    padding: 25px;
+}
+.shadow-soft {
+    box-shadow: 0px 5px 16px rgba(0,0,0,0.08);
+}
+
+/* ====== 입력폼 스타일 ====== */
+.form-control {
+    border-radius: 10px !important;
+    padding: 12px;
+    border: 1px solid #d0d7e2;
+    background-color: #fff;
+}
+.form-control:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 2px rgba(13,110,253,0.15);
+}
+
+/* ====== 버튼 스타일 개선 ====== */
+.btn {
+    padding: 10px 14px;
+    border-radius: 10px;
+    font-weight: 600;
+}
+.btn-primary {
+    background-color: #0d6efd;
+    border: none;
+}
+.btn-primary:hover {
+    background-color: #0b5ed7;
+}
+.btn-secondary {
+    background-color: #6c757d;
+    border: none;
+}
+.btn-danger {
+    background-color: #dc3545;
+    border: none;
+}
+.btn-warning {
+    background-color: #f0ad4e;
+    border: none;
+}
+
+/* ====== 테이블 스타일 ====== */
+.table {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0px 4px 14px rgba(0,0,0,0.05);
+}
+.table thead {
+    background: #f1f3f7;
+}
+.table th {
+    font-weight: 600;
+}
+
+/* 리스트 hover 효과 */
+.table-hover tbody tr:hover {
+    background-color: rgba(0,0,0,0.03);
+}
+
+/* ====== 네비게이션 바 ====== */
+.navbar {
+    border-bottom: 1px solid rgba(255,255,255,0.12);
+}
+.navbar-brand {
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+/* 로그인/회원가입 박스 */
+.login-box, .register-box {
+    max-width: 420px;
+    margin: 70px auto;
+    padding: 35px 30px;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0px 6px 25px rgba(0,0,0,0.08);
+}
+
+/* 마이페이지 텍스트 */
+.profile-info {
+    font-size: 1.1rem;
+    margin-bottom: 12px;
+}
+
+/* ====== footer ====== */
+footer {
+    border-top: 1px solid #e6e6e6;
+    margin-top: 50px;
+    padding-top: 20px;
+}

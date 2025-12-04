@@ -29,6 +29,8 @@ public class Comment {
     @Column(nullable = false)
     private String content;
 
+    private boolean active = true; // 관리자 비활성/활성 기능
+
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 

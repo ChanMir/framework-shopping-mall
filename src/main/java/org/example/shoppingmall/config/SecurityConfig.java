@@ -32,11 +32,12 @@ public class SecurityConfig {
                         // 📌 H2 Console 전체 허용
                         .requestMatchers("/h2-console/**").permitAll()
 
-                        .requestMatchers("/", "/login", "/member/login", "/member/register",
+                        .requestMatchers("/", "/login", "/member/**",
                                 "/css/**", "/js/**", "/img/**").permitAll()
 
                         // 일반 사용자 권한
-                        .requestMatchers("/member/**", "/cart/**", "/order/**","/inquiry/**")
+                        .requestMatchers("/member/**", "/cart/**", "/order/**","/inquiry/**","product/**",
+                                "review/**","comment/**","delivery/**","payment/**","admin/**")
                         .hasAnyRole("USER", "ADMIN")
 
                         // 관리자 전용

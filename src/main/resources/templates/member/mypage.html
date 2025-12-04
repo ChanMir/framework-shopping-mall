@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fregments/header :: head"></head>
+<body>
+
+<th:block th:replace="fregments/header :: header"></th:block>
+
+<div class="container mt-5 mb-5">
+    <div class="card shadow-soft">
+        <div class="card-body">
+
+            <h2 class="page-title">마이페이지</h2>
+            <hr>
+
+            <p class="profile-info"><b>아이디:</b> <span th:text="${member.username}"></span></p>
+            <p class="profile-info"><b>전화번호:</b> <span th:text="${member.phone}"></span></p>
+            <p class="profile-info"><b>이메일:</b> <span th:text="${member.email}"></span></p>
+
+            <div class="text-end mt-4">
+                <a th:href="@{/member/mypage/edit}" class="btn btn-primary">정보 수정</a>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<th:block th:replace="fregments/footer :: footer"></th:block>
+</body>
+</html>

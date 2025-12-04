@@ -3,6 +3,7 @@ package org.example.shoppingmall.controller;
 import lombok.RequiredArgsConstructor;
 import org.example.shoppingmall.Service.CartService;
 import org.example.shoppingmall.domain.Member;
+import org.example.shoppingmall.security.CustomUserDetails;
 import org.example.shoppingmall.security.SecurityUser;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -24,8 +25,10 @@ public class CartController {
             return null; // 필요하면 여기서 예외 던져도 됨
         }
 
-        SecurityUser securityUser = (SecurityUser) auth.getPrincipal();
-        return securityUser.getMember();
+        CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
+
+
+        return user.getMember();
     }
 
     @GetMapping

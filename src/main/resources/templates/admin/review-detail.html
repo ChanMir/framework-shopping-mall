@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>리뷰 상세 관리</title>
+</head>
+<body>
+
+<h1>리뷰 상세</h1>
+
+<p><b>ID:</b> <span th:text="${review.id}"></span></p>
+<p><b>상품 ID:</b> <span th:text="${review.product.id}"></span></p>
+<p><b>작성자:</b> <span th:text="${review.member.username}"></span></p>
+<p><b>평점:</b> <span th:text="${review.rating}"></span></p>
+<p><b>내용:</b> <span th:text="${review.content}"></span></p>
+<p><b>상태:</b> <span th:text="${review.active ? '활성' : '비활성'}"></span></p>
+
+<!-- 리뷰 삭제 -->
+<form th:action="@{'/admin/reviews/' + ${review.id} + '/delete'}" method="post">
+    <button type="submit">리뷰 삭제</button>
+</form>
+
+<!-- 리뷰 활성/비활성 -->
+<form th:if="${review.active}"
+      th:action="@{'/admin/reviews/' + ${review.id} + '/disable'}"
+      method="post">
+    <button type="submit">리뷰 비활성</button>
+</form>
+
+<form th:unless="${review.active}"
+      th:action="@{'/admin/reviews/' + ${review.id} + '/enable'}"
+      method="post">
+    <button type="submit">리뷰 활성</button>
+</form>
+
+<hr>
+
+<h2>댓글 목록</h2>
+
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>작성자</th>
+        <th>내용</th>
+        <th>상태</th>
+        <th>관리</th>
+    </tr>
+
+    <tr th:each="c : ${comments}">
+        <td th:text="${c.id}"></td>
+
+        <!-- 🔥 댓글 작성자 -->
+        <td th:text="${c.member.username}"></td>
+
+        <td th:text="${c.content}"></td>
+        <td th:text="${c.active ? '활성' : '비활성'}"></td>
+
+        <td>
+            <!-- 댓글 삭제 -->
+            <form th:action="@{'/admin/reviews/' + ${review.id} + '/comments/' + ${c.id} + '/delete'}"
+                  method="post"
+                  style="display:inline;">
+                <button type="submit">삭제</button>
+            </form>
+
+            <!-- 비활성화 -->
+            <form th:if="${c.active}"
+                  th:action="@{'/admin/reviews/' + ${review.id} + '/comments/' + ${c.id} + '/disable'}"
+                  method="post"
+                  style="display:inline;">
+                <button type="submit">비활성</button>
+            </form>
+
+            <!-- 활성화 -->
+            <form th:unless="${c.active}"
+                  th:action="@{'/admin/reviews/' + ${review.id} + '/comments/' + ${c.id} + '/enable'}"
+                  method="post"
+                  style="display:inline;">
+                <button type="submit">활성</button>
+            </form>
+
+        </td>
+    </tr>
+
+</table>
+
+</body>
+</html>
