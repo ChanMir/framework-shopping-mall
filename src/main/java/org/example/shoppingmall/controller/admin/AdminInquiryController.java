@@ -1,41 +1,69 @@
 package org.example.shoppingmall.controller.admin;
 
 import lombok.RequiredArgsConstructor;
+import org.example.shoppingmall.Service.AdminInquiryService;
+import org.example.shoppingmall.Service.InquiryReplyService;
 import org.example.shoppingmall.Service.InquiryService;
 import org.example.shoppingmall.domain.Inquiry;
+import org.example.shoppingmall.domain.InquiryStatus;
 import org.example.shoppingmall.repository.InquiryRepository;
+import org.example.shoppingmall.security.CustomUserDetails;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/admin/inquiries")
+@RequestMapping("/admin/inquiry")
 public class AdminInquiryController {
 
+    private final AdminInquiryService adminInquiryService;
     private final InquiryService inquiryService;
+    private final InquiryReplyService replyService;
 
+    /** 관리자 문의 목록 */
     @GetMapping("")
-    public String inquiryList(Model model) {
-        model.addAttribute("inquiries", inquiryService.findAll());
+    public String list(Model model) {
+
+        model.addAttribute("inquiries",
+                adminInquiryService.getAllInquiries());
+
         return "admin/inquiry-list";
     }
 
+    /** 상세 */
     @GetMapping("/{id}")
     public String detail(@PathVariable Long id, Model model) {
-        model.addAttribute("inquiry", inquiryService.findById(id));
+
+        Inquiry inquiry = adminInquiryService.getInquiry(id);
+
+        model.addAttribute("inquiry", inquiry);
+        model.addAttribute("replies", replyService.getReplies(id));
+
         return "admin/inquiry-detail";
     }
 
-    @PostMapping("/{id}/answer")
-    public String answer(@PathVariable Long id, @RequestParam String answer) {
-        inquiryService.answerInquiry(id, answer);
-        return "redirect:/admin/inquiries";
+    /** 답변 등록 */
+    @PostMapping("/{id}/reply")
+    public String reply(
+            @PathVariable Long id,
+            @AuthenticationPrincipal CustomUserDetails admin,
+            @RequestParam String content
+    ) {
+        Inquiry inquiry = adminInquiryService.getInquiry(id);
+        adminInquiryService.addReply(inquiry, admin.getMember(), content);
+
+        return "redirect:/admin/inquiry/" + id;
     }
 
-    @PostMapping("/{id}/delete")
-    public String delete(@PathVariable Long id) {
-        inquiryService.delete(id);
-        return "redirect:/admin/inquiries";
+    /** 상태 변경 */
+    @PostMapping("/{id}/status")
+    public String updateStatus(
+            @PathVariable Long id,
+            @RequestParam InquiryStatus status
+    ) {
+        adminInquiryService.updateStatus(id, status);
+        return "redirect:/admin/inquiry/" + id;
     }
 }

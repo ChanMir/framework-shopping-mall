@@ -1,6 +1,7 @@
 package org.example.shoppingmall.config;
 
 import lombok.RequiredArgsConstructor;
+import org.example.shoppingmall.security.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -10,6 +11,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @RequiredArgsConstructor
 public class SecurityConfig {
+    private final CustomUserDetailsService customUserDetailsService;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -34,7 +36,7 @@ public class SecurityConfig {
                                 "/css/**", "/js/**", "/img/**").permitAll()
 
                         // 일반 사용자 권한
-                        .requestMatchers("/member/**", "/cart/**", "/order/**")
+                        .requestMatchers("/member/**", "/cart/**", "/order/**","/inquiry/**")
                         .hasAnyRole("USER", "ADMIN")
 
                         // 관리자 전용
@@ -54,6 +56,7 @@ public class SecurityConfig {
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/")
                 );
+        http.userDetailsService(customUserDetailsService);
 
         return http.build();
     }

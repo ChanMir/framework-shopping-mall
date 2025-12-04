@@ -16,7 +16,6 @@ public class CustomUserDetails implements UserDetails {
         this.member = member;
     }
 
-    // ✔ 추가: Member 엔티티 반환
     public Member getMember() {
         return this.member;
     }

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: head"></head>
+
+<body>
+
+<th:block th:replace="admin/admin-header :: adminHeader"></th:block>
+
+<div class="container mt-4">
+
+    <h2>문의 관리</h2>
+
+    <table class="table table-hover text-center align-middle">
+        <thead class="table-light">
+        <tr>
+            <th>ID</th>
+            <th>제목</th>
+            <th>회원</th>
+            <th>상태</th>
+            <th>작성일</th>
+            <th></th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="q : ${inquiries}">
+            <td th:text="${q.id}"></td>
+            <td th:text="${q.title}"></td>
+            <td th:text="${q.member.username}"></td>
+
+            <td>
+                <span th:text="${q.status}" class="badge bg-info"></span>
+            </td>
+
+            <td th:text="${#temporals.format(q.createdAt, 'yyyy-MM-dd HH:mm')}"></td>
+
+            <td>
+                <a th:href="@{'/admin/inquiry/' + ${q.id}}"
+                   class="btn btn-sm btn-primary">관리</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+</body>
+</html>

@@ -53,4 +53,9 @@ public class InquiryService {
     public void delete(Long id) {
         inquiryRepository.deleteById(id);
     }
+    public Inquiry getInquiry(Long id) {
+        return inquiryRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("문의가 존재하지 않습니다."));
+    }
+
 }

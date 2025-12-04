@@ -1,10 +1,75 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/header :: head"></head>
+
 <body>
 
+<!-- 공통 네비게이션 -->
+<th:block th:replace="fragments/header :: header"></th:block>
+
+<div class="container mt-5 mb-5">
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+
+            <h2 class="mb-4 border-bottom pb-2">문의 목록</h2>
+
+            <div th:if="${#lists.isEmpty(inquiries)}" class="alert alert-warning">
+                등록된 문의가 없습니다.
+            </div>
+
+            <table class="table table-hover text-center align-middle"
+                   th:if="${!#lists.isEmpty(inquiries)}">
+                <thead class="table-light">
+                <tr>
+                    <th>번호</th>
+                    <th>제목</th>
+                    <th>작성자</th>
+                    <th>상태</th>
+                    <th>작성일</th>
+                    <th></th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr th:each="q : ${inquiries}">
+                    <td th:text="${q.id}"></td>
+
+                    <td th:text="${q.title}"></td>
+
+                    <td th:text="${q.member.username}"></td>
+
+                    <td>
+                        <span th:switch="${q.status}">
+                            <span th:case="'WAITING'" class="badge bg-warning text-dark">답변대기</span>
+                            <span th:case="'ANSWERED'" class="badge bg-success">답변완료</span>
+                            <span th:case="'CLOSED'" class="badge bg-secondary">종료</span>
+                            <span th:case="*" class="badge bg-light text-dark">알수없음</span>
+                        </span>
+                    </td>
+
+                    <td th:text="${#temporals.format(q.createdAt, 'yyyy-MM-dd HH:mm')}"></td>
+
+                    <td>
+                        <a th:href="@{'/inquiry/' + ${q.id}}" class="btn btn-primary btn-sm">
+                            보기
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div class="text-end mt-3">
+                <a th:href="@{/inquiry/new}" class="btn btn-success">
+                    새 문의 작성
+                </a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<th:block th:replace="fragments/footer :: footer"></th:block>
 </body>
 </html>

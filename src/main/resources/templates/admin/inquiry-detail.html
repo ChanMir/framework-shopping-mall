@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: head"></head>
+
+<body>
+
+<th:block th:replace="admin/admin-header :: adminHeader"></th:block>
+
+
+<div class="container mt-4 mb-5">
+
+    <h2 class="mb-3">문의 상세</h2>
+
+    <div class="card mb-4">
+        <div class="card-body">
+
+            <h4 th:text="${inquiry.title}"></h4>
+
+            <p class="mt-3" th:text="${inquiry.content}"></p>
+
+            <p class="text-muted">
+                작성자: <span th:text="${inquiry.member.username}"></span> /
+                <span th:text="${#temporals.format(inquiry.createdAt, 'yyyy-MM-dd HH:mm')}"></span>
+            </p>
+
+            <!-- 상태 변경 -->
+            <form th:action="@{'/admin/inquiry/' + ${inquiry.id} + '/status'}"
+                  method="post" class="mt-3">
+
+                <select name="status" class="form-select w-auto d-inline">
+                    <option th:each="s : ${T(org.example.shoppingmall.domain.InquiryStatus).values()}"
+                            th:value="${s}"
+                            th:text="${s}"
+                            th:selected="${s == inquiry.status}"></option>
+                </select>
+
+                <button class="btn btn-secondary btn-sm">상태 변경</button>
+            </form>
+
+        </div>
+    </div>
+
+    <!-- 답변 목록 -->
+    <h4>답변</h4>
+
+    <div class="card p-3 mb-3"
+         th:each="r : ${replies}">
+        <p th:text="${r.content}"></p>
+        <small th:text="${#temporals.format(r.createdAt, 'yyyy-MM-dd HH:mm')}"></small>
+        <span class="text-muted ms-2">(관리자: <span th:text="${r.admin.username}"></span>)</span>
+    </div>
+
+    <!-- 답변 작성 -->
+    <h4 class="mt-4">관리자 답변 작성</h4>
+
+    <form th:action="@{'/admin/inquiry/' + ${inquiry.id} + '/reply'}" method="post">
+        <textarea name="content" class="form-control mb-2" rows="3" required></textarea>
+        <button class="btn btn-primary">답변 등록</button>
+    </form>
+
+</div>
+
+</body>
+</html>
